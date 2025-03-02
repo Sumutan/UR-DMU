@@ -3,6 +3,7 @@ import torch
 import numpy as np
 import random
 import visdom
+from sklearn.metrics import auc, roc_curve, precision_recall_curve, confusion_matrix
 
 class Visualizer(object):
     def __init__(self, env = 'default', **kwargs):
@@ -53,6 +54,14 @@ def save_best_record(test_info, file_path):
     fo.write("auc: {:.4f}\n".format(test_info["auc"][-1]))
     fo.write("ap: {:.4f}\n".format(test_info["ap"][-1]))
     fo.write("ac: {:.4f}\n".format(test_info["ac"][-1]))
+    if "far_all" in test_info:
+        fo.write("far_all: {:.4f}\n".format(test_info["far_all"][-1]))
 
 
-
+def compute_far(gt, pred, printname=None):
+    preTrue = [1 if x > 0.5 else 0 for x in pred]  # 将预测标签转换为二分类的 0 或 1
+    tn, fp, fn, tp = confusion_matrix(gt, preTrue).ravel()  # 计算混淆矩阵中的 TP，TN，FP，FN 值
+    far = fp / (fp + tn)  # 计算 FAR
+    if printname:
+        print(f'far_{printname} : ' + str(far))
+    return far

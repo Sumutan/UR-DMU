@@ -1,0 +1,58 @@
+train:
+
+  UCF:
+    ucf default:
+      --dataset ucf --feature-group both --fusion concat --aggregate_text --extra_loss --use_dic_gt --exp-name ucf-i3d-official
+
+
+
+test:
+  shanghai dic_gt:
+    python main_test.py --dataset shanghai_v2 --use_dic_gt True --feature-group both --fusion add --pretrained-ckpt ./ckpt/my_best/shanghai_v2-both-text_agg-add-1-1-extra_loss-595-i3d-best.pkl --aggregate_text
+  shanghai clip 7.10:
+    --pretrained-ckpt /media/lizi/新加卷/sh/TEVAD-main/ckpt/shanghai-visclip/shanghai-both-text_agg-add-0.0001-extra_loss-610-4869-.pkl --dataset shanghai --feature-group both --fusion add --aggregate_text --extra_loss --feat-extractor clip --feature-size 512 --use_dic_gt
+
+  ucf-i3d-official:
+    --dataset ucf --feat-extractor i3d --feature-size 2048
+    --feature-group both --fusion concat --aggregate_text --save_test_results
+    --rgb-list list/ucf-i3d_raw.list
+    --test-rgb-list list/ucf-i3d-test_raw.list
+    --pretrained-model ./ckpt/ucf/ucf-i3d-official/ucf-i3d-official.pkl
+    --exp-name ucf-i3d-official
+  ucf rtfm:
+    --dataset ucf --feat-extractor i3d --feature-size 2048
+    --feature-group vis --save_test_results
+    --rgb-list list/ucf-i3d.list
+    --test-rgb-list list/ucf-i3d-test.list
+    --pretrained-model ./ckpt/ucf/ucf-i3d-rtfm/ucf-rtfm-828.pkl
+    --use_dic_gt --exp-name ucf-i3d-rtfm--test
+  ucf mae test:
+    --dataset ucf --feat-extractor videoMAE --feature-size 1280 --use_dic_gt 
+    --feature-group both --fusion concat --aggregate_text --save_test_results
+    --rgb-list list/ucf-videoMae-CLIP_UCF_9-5_9-1_finetune_dif_0.5_SP_norm_a0.05.list
+    --test-rgb-list list/ucf-videoMae-test-CLIP_UCF_9-5_9-1_finetune_dif_0.5_SP_norm_a0.05.list
+    --pretrained-model ./ckpt/ucf/ucf-videoMae-CLIP_UCF_9-5_9-1_finetune_dif_0.5_SP_norm_a0.05_seed3407/ucf-both-text_agg-concat-0.0001-extra_loss-235-3407-.pkl
+    --exp-name ucf-videoMae-test-CLIP_UCF_9-5_9-1_finetune_dif_0.5_SP_norm_a0.05
+
+  TAD:
+    TAD-videoMae-9-5_finetune-only_vis-AISO_0.5:
+      --dataset TAD --feature-group vis --fusion concat --feature-size 768 --use_dic_gt
+      --feat-extractor videoMAE --aggregate_text --extra_loss
+      --rgb-list list/TAD_train_list_AISO_0.5.txt
+      --test-rgb-list list/TAD_val_list_AISO_0.5.txt
+      --exp-name TAD-videoMae-9-5_finetune-only_vis-AISO_0.5
+    TAD-videoMae-9-5_9-1_finetune_AISO_0.5_SP_norm_a0.05:
+      --dataset TAD --feature-group both --fusion concat --feature-size 1280
+      --feat-extractor videoMAE --use_dic_gt --aggregate_text --extra_loss
+      --rgb-list list/TAD-CLIP-B-videoMae-9-5_9-1_finetune_AISO_0.5_SP_norm_a0.05.list
+      --test-rgb-list list/TAD-CLIP-B-videoMae-test-9-5_9-1_finetune_AISO_0.5_SP_norm_a0.05.list
+      --exp-name TAD-videoMae-test
+
+    TAD-videoMae-test:
+      python main.py --dataset TAD --feature-group both --fusion concat --feature-size 1280 --use_dic_gt
+      --feat-extractor videoMAE --aggregate_text --extra_loss 
+      --rgb-list list/TAD-CLIP-B-videoMae-9-5_9-1_finetune_AISO_0.5_SP_norm_a0.05.list
+      --test-rgb-list list/TAD-CLIP-B-videoMae-test-9-5_9-1_finetune_AISO_0.5_SP_norm_a0.05.list
+      --exp-name TAD-videoMae-test
+      --pretrained-model ./tmp/TAD-videoMae-CLIP-B-9-5_9-1_finetune_AISO_0.5_SP_norm_a0.05_seed3407.pkl
+      --save_test_results

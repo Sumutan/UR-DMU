@@ -5,7 +5,8 @@ import utils
 from options import *
 from config import *
 from train import *
-from ucf_test import test
+# from ucf_test import test
+from ucf_test import test_dic as test
 from model import *
 from utils import Visualizer
 import os
@@ -25,27 +26,26 @@ if __name__ == "__main__":
         utils.set_seed(config.seed)
         worker_init_fn = np.random.seed(config.seed)
 
-    config.len_feature = 1024
     net = WSAD(config.len_feature, flag = "Train", a_nums = 60, n_nums = 60)
     net = net.cuda()
 
     normal_train_loader = data.DataLoader(
-        UCF_crime(root_dir = config.root_dir, mode = 'Train', modal = config.modal, num_segments = 200, len_feature = config.len_feature, is_normal = True),
-            batch_size = 64,
+        UCF_crime(root_dir = config.root_dir, mode = 'Train', modal = config.modal, num_segments = 200, len_feature = config.len_feature, is_normal = True,list_folder = config.list_folder),
+            batch_size = config.batch_size,
             shuffle = True, num_workers = config.num_workers,
             worker_init_fn = worker_init_fn, drop_last = True)
     abnormal_train_loader = data.DataLoader(
-        UCF_crime(root_dir = config.root_dir, mode = 'Train', modal = config.modal, num_segments = 200, len_feature = config.len_feature, is_normal = False),
-            batch_size = 64,
+        UCF_crime(root_dir = config.root_dir, mode = 'Train', modal = config.modal, num_segments = 200, len_feature = config.len_feature, is_normal = False,list_folder = config.list_folder),
+            batch_size = config.batch_size,
             shuffle = True, num_workers = config.num_workers,
             worker_init_fn = worker_init_fn, drop_last = True)
     test_loader = data.DataLoader(
-        UCF_crime(root_dir = config.root_dir, mode = 'Test', modal = config.modal, num_segments = config.num_segments, len_feature = config.len_feature),
+        UCF_crime(root_dir = config.root_dir, mode = 'Test', modal = config.modal, num_segments = config.num_segments, len_feature = config.len_feature,list_folder = config.list_folder),
             batch_size = 1,
             shuffle = False, num_workers = config.num_workers,
             worker_init_fn = worker_init_fn)
 
-    test_info = {"step": [], "auc": [],"ap":[],"ac":[]}
+    test_info = {"step": [], "auc": [],"auc_abn": [],"ap":[],"ac":[],"far_all":[],"far_abn":[]}
     
     best_auc = 0
 
@@ -54,7 +54,7 @@ if __name__ == "__main__":
     optimizer = torch.optim.Adam(net.parameters(), lr = config.lr[0],
         betas = (0.9, 0.999), weight_decay = 0.00005)
 
-    wind = Visualizer(env = 'UCF_URDMU', port = "2022", use_incoming_socket = False)
+    wind = Visualizer(env = 'UCF_URDMU', port = "8097", use_incoming_socket = False)
     test(net, config, wind, test_loader, test_info, 0)
     for step in tqdm(
             range(1, config.num_iters + 1),

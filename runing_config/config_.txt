@@ -1,0 +1,13 @@
+
+TAD-videoMae-9-5_9-1_finetune_AISO_0.5_SP_norm_a0.05-residual:
+    --dataset TAD --feature-group both --fusion concat --feature-size 1280 --use_dic_gt
+    --feat-extractor videoMAE --aggregate_text --extra_loss --batch-size 64
+    --rgb-list list/TAD-videoMae-9-5_9-1_finetune_AISO_0.5_SP_norm_a0.05-residual.list
+    --test-rgb-list list/TAD-videoMae-test-9-5_9-1_finetune_AISO_0.5_SP_norm_a0.05-residual.list
+    --exp-name TAD-videoMae-9-5_9-1_finetune_AISO_0.5_SP_norm_a0.05-residual
+    
+--dataset TAD --feature-group both --fusion concat --feature-size 1280 --use_dic_gt    --feat-extractor videoMAE --aggregate_text --extra_loss --batch-size 64    --rgb-list list/TAD-videoMae-9-5_9-1_finetune_AISO_0.5_SP_norm_a0.05-residual.list    --test-rgb-list list/TAD-videoMae-test-9-5_9-1_finetune_AISO_0.5_SP_norm_a0.05-residual.list    --exp-name TAD-videoMae-9-5_9-1_finetune_AISO_0.5_SP_norm_a0.05-residual    
+
+--seed 228 --dataset TAD --feature-group both --fusion concat --feature-size 1280 --use_dic_gt    --feat-extractor videoMAE --aggregate_text --extra_loss --batch-size 64    --rgb-list list/TAD-videoMae-9-5_9-1_finetune_AISO_0.5_SP_norm_a0.05-residual.list    --test-rgb-list list/TAD-videoMae-test-9-5_9-1_finetune_AISO_0.5_SP_norm_a0.05-residual.list    --exp-name TAD-videoMae-9-5_9-1_finetune_AISO_0.5_SP_norm_a0.05-residual_seed228
+
+--seed 3407 --dataset TAD --feature-group both --fusion concat --feature-size 1280 --use_dic_gt    --feat-extractor videoMAE --aggregate_text --extra_loss --batch-size 64    --rgb-list list/TAD-videoMae-9-5_9-1_finetune_AISO_0.5_SP_norm_a0.05-residual.list    --test-rgb-list list/TAD-videoMae-test-9-5_9-1_finetune_AISO_0.5_SP_norm_a0.05-residual.list    --exp-name TAD-videoMae-9-5_9-1_finetune_AISO_0.5_SP_norm_a0.05-residual_seed3407

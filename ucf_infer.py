@@ -1,6 +1,7 @@
 import torch
 import numpy as np
-from dataset_loader import UCF_crime
+# from dataset_loader import UCF_crime
+from dataset_loader_csh import UCF_crime_dic as UCF_crime
 from options import parse_args
 import pdb
 from config import Config
@@ -113,4 +114,4 @@ if __name__ == "__main__":
             batch_size = 1,
             shuffle = False, num_workers = config.num_workers,
             worker_init_fn = worker_init_fn)
-    valid(net, config, test_loader, model_file = os.path.join(args.model_path, "ucf_trans_2022.pkl"))
+    valid(net, config, test_loader, model_file = os.path.join(args.model_path, "ucf_trans_3000.pkl"))
