@@ -2,6 +2,12 @@ echo start process!
 set -x # -e stop when any code raise error; -x print command
 start_time=$(date +%s)
 
+# 3.2
+CUDA_VISIBLE_DEVICES=0 python ucf_main.py --seed 0 --list_folder ./list/SVMAE/SVMAE_woLoss_CLIP-B --output_path outputs/ucf_8-26_8-22_SVMAE_wo-loss_CLIP-B_seed0 --len_feature 1280 &
+CUDA_VISIBLE_DEVICES=1 python ucf_main.py --seed 228 --list_folder ./list/SVMAE/SVMAE_woLoss_CLIP-B --output_path outputs/ucf_8-26_8-22_SVMAE_wo-loss_CLIP-B_seed0 --len_feature 1280 &
+CUDA_VISIBLE_DEVICES=2 python ucf_main.py --seed 3407 --list_folder ./list/SVMAE/SVMAE_woLoss_CLIP-B --output_path outputs/ucf_8-26_8-22_SVMAE_wo-loss_CLIP-B_seed0 --len_feature 1280
+wait
+echo "3.2 ucf_8-26_8-22_SVMAE_wo-loss_CLIP-B Run finish!"
 
 #python ucf_main.py --seed 0 --dataset ucfg1 --batch_size 128 --list_folder ./list/UCFg1_CLIP-B --output_path outputs/ucf_UCFg1_CLIP-B_Batch128_seed0 --len_feature 512
 #python ucf_main.py --seed 228 --dataset ucfg1 --batch_size 128 --list_folder ./list/UCFg1_CLIP-B --output_path outputs/ucf_UCFg1_CLIP-B_Batch128_seed228 --len_feature 512
@@ -32,3 +38,8 @@ start_time=$(date +%s)
 
 
 #python ucf_main.py --list_folder ./list/UCF_SVMAE-B
+
+end_time=$(date +%s)
+runtime_hours=$(((end_time - start_time)/3600))
+echo "任务运行时间：$runtime_hours 小时"
+date +"%Y-%m-%d %H:%M:%S"

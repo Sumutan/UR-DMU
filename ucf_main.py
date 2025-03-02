@@ -10,7 +10,8 @@ from ucf_test import test_dic as test
 from model import *
 from utils import Visualizer
 import os
-from dataset_loader import *
+# from dataset_loader import *
+from dataset_loader_csh import *
 from tqdm import tqdm
 
 if __name__ == "__main__":

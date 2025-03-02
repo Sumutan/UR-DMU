@@ -8,14 +8,14 @@ import utils
 support GT_dic
 """
 class UCF_crime(data.DataLoader):
-    def __init__(self, root_dir, modal, mode, num_segments, len_feature, seed=-1, is_normal=None):
+    def __init__(self, root_dir, modal, mode, num_segments, len_feature, seed=-1, is_normal=None,list_folder='list'):
         if seed >= 0:
             utils.set_seed(seed)
         self.mode = mode
         self.modal = modal
         self.num_segments = num_segments
         self.len_feature = len_feature
-        split_path = os.path.join('list','UCF_{}.list'.format(self.mode))
+        split_path = os.path.join(list_folder,'UCF_{}.list'.format(self.mode))
         split_file = open(split_path, 'r')
         self.vid_list = []
         for line in split_file:
